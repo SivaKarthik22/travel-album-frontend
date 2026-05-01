@@ -1,12 +1,17 @@
-
+import { lazy, Suspense } from 'react'
+import {Route, Routes} from 'react-router-dom'
 import './App.css'
-import { Button } from "@/components/ui/button"
+import BigLoadingUI from './components/utilityComponents/BigLoadingUI';
+
+const LoginPage = lazy(()=> import('./components/login/LoginPage'));
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
+    <Suspense fallback={<BigLoadingUI/>}>
+      <Routes>
+        <Route path='/login' element={<LoginPage/>}></Route>
+      </Routes>
+    </Suspense>
   )
 }
 
