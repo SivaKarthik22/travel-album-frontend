@@ -14,8 +14,34 @@ class AssetsApiService extends ApiService {
 
     async getLoginPageImagesList() {
         try {
-            const response = await this.axiosInstance.get("/get-assetsInFolder?folderName=login_page_images");
-            return response.data;
+            const allResources: string[] = [];
+            let cursor: string | number | null = null;
+            const params: any = {
+                urlOptions: {
+                    client_hints: true,
+                    sizes: "100vw",
+                    transformation: [
+                        { crop: "lfill" },
+                        { width: "auto:breakpoints", crop: "limit" },
+                        { quality: "auto" },
+                        { dpr: "auto" },
+                        { fetch_format: "auto" },
+                    ]
+                }
+            }
+            do {
+                if (cursor)
+                    params.cursor = cursor;
+                const response = await this.axiosInstance.get("/getAssetsInFolder/login_page_images", { params: params });
+                const responseData = response.data?.responseData;
+                responseData?.assets?.forEach((element: any) => {
+                    if (element.transformedImage)
+                        allResources.push(element.transformedImage)
+                });
+                cursor = responseData?.nextCursor;
+            } while (cursor);
+            
+            return allResources;
         }
         catch (error: any) {
             return error?.response?.data;

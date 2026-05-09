@@ -1,3 +1,5 @@
 export default function SmallLoadingUI(){
-    return <></>
+    return <>
+        Loading...
+    </>
 }

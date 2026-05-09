@@ -1,17 +1,11 @@
-import assetsApiServiceInstance from "@/services/AssetsApiService"
-import { Suspense, use, useCallback } from "react";
-import SmallLoadingUI from "../utilityComponents/SmallLoadingUI";
+'use client';
 
-export default function ImageComponent(){
-    const imageData: string[] = use( assetsApiServiceInstance.getLoginPageImagesList() );
+import { use } from "react";
 
-    const generateRandomIndex = useCallback((maxNum:number)=>{
-        return Math.floor(Math.random() * maxNum);
-    }, []);
+export default function ImageComponent(props:any) {
+    const imagesList: string[] = use(props.imagesListPromise);
 
-    return <>
-        <Suspense fallback={<SmallLoadingUI />}>
-            <img src={imageData[generateRandomIndex(imageData.length)]}/>
-        </Suspense>
-    </>
+    return <img src={imagesList[getRandomNumber(imagesList.length)]} />
 }
+
+const getRandomNumber = (length: number) => Math.floor(Math.random() * length);
