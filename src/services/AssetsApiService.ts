@@ -16,23 +16,24 @@ class AssetsApiService extends ApiService {
         try {
             const allResources: string[] = [];
             let cursor: string | number | null = null;
-            const params: any = {
+            const nestedParams: any = {
                 urlOptions: {
-                    client_hints: true,
-                    sizes: "100vw",
+                    // client_hints: true,
+                    // sizes: "100vw",
                     transformation: [
                         { crop: "lfill" },
-                        { width: "auto:breakpoints", crop: "limit" },
+                        // { width: "auto:breakpoints", crop: "limit" },
                         { quality: "auto" },
                         { dpr: "auto" },
                         { fetch_format: "auto" },
                     ]
                 }
             }
+            const flatParams = this.flattenObject("", {}, nestedParams);
             do {
                 if (cursor)
-                    params.cursor = cursor;
-                const response = await this.axiosInstance.get("/getAssetsInFolder/login_page_images", { params: params });
+                    flatParams.cursor = cursor;
+                const response = await this.axiosInstance.get("/getAssetsInFolder/login_page_images", { params: flatParams });
                 const responseData = response.data?.responseData;
                 responseData?.assets?.forEach((element: any) => {
                     if (element.transformedImage)
@@ -40,7 +41,7 @@ class AssetsApiService extends ApiService {
                 });
                 cursor = responseData?.nextCursor;
             } while (cursor);
-            
+
             return allResources;
         }
         catch (error: any) {

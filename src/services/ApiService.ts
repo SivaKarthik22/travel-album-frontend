@@ -14,4 +14,23 @@ export class ApiService {
 
         return queryParamsString ? `${route}?${queryParamsString}` : route;
     } */
+
+    protected flattenObject(prefix: string, flatObj: any, objToFlatten: any) {
+        if (typeof objToFlatten != 'object') {
+            flatObj[prefix] = objToFlatten;
+        }
+        else if (objToFlatten instanceof Array) {
+            objToFlatten.forEach((prop, index) => {
+                const updatedPrefix = prefix ? `${prefix}-${index}` : `${index}`;
+                flatObj = this.flattenObject(updatedPrefix, flatObj, prop);
+            });
+        }
+        else {
+            for (const [key, value] of Object.entries(objToFlatten)) {
+                const updatedPrefix = prefix ? `${prefix}-${key}` : key;
+                flatObj = this.flattenObject(updatedPrefix, flatObj, value);
+            }
+        }
+        return flatObj;
+    }
 }
