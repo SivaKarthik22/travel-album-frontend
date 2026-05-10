@@ -21,7 +21,7 @@ class AssetsApiService extends ApiService {
                     // client_hints: true,
                     // sizes: "100vw",
                     transformation: [
-                        { crop: "lfill" },
+                        // { crop: "lfill" },
                         // { width: "auto:breakpoints", crop: "limit" },
                         { quality: "auto" },
                         { dpr: "auto" },
