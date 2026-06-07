@@ -12,7 +12,7 @@ class AssetsApiService extends ApiService {
         super(axiosInstance);
     }
 
-    async getLoginPageImagesList() {
+    async getLoginPageImagesList(height:number) {
         try {
             const allResources: string[] = [];
             let cursor: string | number | null = null;
@@ -23,9 +23,11 @@ class AssetsApiService extends ApiService {
                     transformation: [
                         // { crop: "lfill" },
                         // { width: "auto:breakpoints", crop: "limit" },
-                        { quality: "auto" },
-                        { dpr: "auto" },
-                        { fetch_format: "auto" },
+                        // { quality: "auto" },
+                        // { dpr: "auto" },
+                        // { fetch_format: "auto" },
+                        {quality: "auto", fetch_format: "auto"},
+                        {height: height},
                     ]
                 }
             }

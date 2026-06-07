@@ -1,11 +1,24 @@
-'use client';
+import assetsApiServiceInstance from "@/services/AssetsApiService";
+import { Spinner } from "../ui/spinner";
+import { useEffect, useState } from "react";
 
-import { use } from "react";
+export default function ImageComponent() {
+    const [imagesList, setImagesList] = useState([]);
 
-export default function ImageComponent(props:any) {
-    const imagesList: string[] = use(props.imagesListPromise);
+    const getImagesList = async () => {
+        const height = window.innerHeight;
+        setImagesList(await assetsApiServiceInstance.getLoginPageImagesList(height));
+    }
+    useEffect(() => {
+        getImagesList();
+    }, []);
 
-    return <img className="object-cover w-full h-full" src={imagesList[getRandomNumber(imagesList.length)]} />
+    return <div className="w-8/12 h-screen flex items-center justify-center">
+        {imagesList.length ?
+            <img className="object-cover w-full h-full" src={imagesList[getRandomNumber(imagesList.length)]} /> :
+            <Spinner className="size-6" />
+        }
+    </div>
 }
 
 const getRandomNumber = (length: number) => Math.floor(Math.random() * length);
