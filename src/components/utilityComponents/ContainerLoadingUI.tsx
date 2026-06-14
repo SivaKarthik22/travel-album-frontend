@@ -1,3 +1,7 @@
+import { Spinner } from "../ui/spinner";
+
 export default function ContainerLoadingUI(){
-    return <></>
+    return <>
+        <Spinner/>
+    </>
 }

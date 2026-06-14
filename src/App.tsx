@@ -9,7 +9,8 @@ function App() {
   return (
     <Suspense fallback={<ContainerLoadingUI/>}>
       <Routes>
-        <Route path='/login' element={<LoginPage/>}></Route>
+        <Route path='/login' element={<LoginPage loginMode={true} />}></Route>
+        <Route path='/signup' element={<LoginPage loginMode={false}/>}></Route>
       </Routes>
     </Suspense>
   )
