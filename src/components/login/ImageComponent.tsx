@@ -1,5 +1,4 @@
 import assetsApiServiceInstance from "@/services/AssetsApiService";
-import { Spinner } from "../ui/spinner";
 import { useEffect, useState } from "react";
 
 export default function ImageComponent() {
@@ -13,11 +12,13 @@ export default function ImageComponent() {
         getImagesList();
     }, []);
 
-    return <div className="w-8/12 h-screen flex items-center justify-center">
-        {imagesList.length ?
-            <img className="object-cover w-full h-full" src={imagesList[getRandomNumber(imagesList.length)]} /> :
-            <Spinner className="size-6" />
-        }
+    return <div className="w-1/2 h-screen flex items-center justify-center bg-yellow-200 relative overflow-hidden">
+        {imagesList.length ? <img className="object-cover w-full h-full" src={imagesList[getRandomNumber(imagesList.length)]} /> : <></> }
+        <div id="img-title-overlay">
+            <p>My</p>
+            <p>Travel</p>
+            <p>Album</p>
+        </div>
     </div>
 }
 

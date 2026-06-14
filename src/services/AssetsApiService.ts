@@ -13,8 +13,8 @@ class AssetsApiService extends ApiService {
     }
 
     async getLoginPageImagesList(height:number) {
+        const allResources: string[] = [];
         try {
-            const allResources: string[] = [];
             let cursor: string | number | null = null;
             const nestedParams: any = {
                 urlOptions: {
@@ -43,12 +43,11 @@ class AssetsApiService extends ApiService {
                 });
                 cursor = responseData?.nextCursor;
             } while (cursor);
-
-            return allResources;
         }
         catch (error: any) {
-            return error?.response?.data;
+            console.warn(error);
         }
+        return allResources;
     }
 }
 
