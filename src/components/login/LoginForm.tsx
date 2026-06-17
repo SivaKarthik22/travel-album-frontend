@@ -42,7 +42,7 @@ const loginFormSchema = z.object({
     .toLowerCase(),
   password: z
     .string()
-    .min(1, "Password is required" ),
+    .min(1, "Password is required"),
 })
 
 export default function LoginForm({ loginMode = true }: any) {
@@ -60,7 +60,7 @@ export default function LoginForm({ loginMode = true }: any) {
     console.log(data);
   }
 
-  function redirect(){
+  function redirect() {
     form.reset();
     navigate(loginMode ? '/signup' : '/login');
   }
@@ -119,11 +119,9 @@ export default function LoginForm({ loginMode = true }: any) {
                         <FieldError errors={[fieldState.error]} />
                       )}
                       {!loginMode &&
-                        <FieldDescription>
-                          <ul className="list-disc pl-5">
-                            <li>Password must be between 8 and 16 characters long</li>
-                            <li>Password must contain at least one uppercase letter, one lowercase letter, one number and one special character</li>
-                          </ul>
+                        <FieldDescription className="list-disc pl-5">
+                          <li>Password must be between 8 and 16 characters long</li>
+                          <li>Password must contain at least one uppercase letter, one lowercase letter, one number and one special character</li>
                         </FieldDescription>
                       }
                     </Field>

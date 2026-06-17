@@ -15,7 +15,7 @@ export default function ImageComponent() {
     return <div className="w-1/2 h-screen flex items-center justify-center bg-yellow-200 relative overflow-hidden">
         {imagesList.length ? <img className="object-cover w-full h-full" src={imagesList[getRandomNumber(imagesList.length)]} /> : <></> }
         <div id="img-title-overlay">
-            <p>My</p>
+            <p>my</p>
             <p>Travel</p>
             <p>Album</p>
         </div>

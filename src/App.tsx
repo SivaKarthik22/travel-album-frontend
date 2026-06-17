@@ -7,7 +7,7 @@ const LoginPage = lazy(()=> import('./components/login/LoginPage'));
 
 function App() {
   return (
-    <Suspense fallback={<ContainerLoadingUI/>}>
+    <Suspense fallback={<ContainerLoadingUI width="full" height="screen"/>}>
       <Routes>
         <Route path='/login' element={<LoginPage loginMode={true} />}></Route>
         <Route path='/signup' element={<LoginPage loginMode={false}/>}></Route>
