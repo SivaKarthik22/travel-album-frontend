@@ -14,6 +14,7 @@
     align-items: flex-end;
     font-weight:100;
     letter-spacing: -0.1em;
+    background-color: rgba(254, 210, 51, 0.6);
 }
 #img-title-overlay p{
     text-shadow:  0px 2px 2px rgb(0 0 0 / 0.2), 0px 4px 2px rgb(0 0 0 / 0.2), 0px 6px 8px rgb(0 0 0 / 0.1), 0px 10px 10px rgb(0 0 0 / 0.1);

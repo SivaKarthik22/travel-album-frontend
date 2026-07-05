@@ -2,7 +2,7 @@ import assetsApiServiceInstance from "@/services/AssetsApiService";
 import { useEffect, useState } from "react";
 
 export default function ImageComponent() {
-    const [imagesList, setImagesList] = useState([]);
+    const [imagesList, setImagesList] = useState<string[]>([]);
 
     const getImagesList = async () => {
         const height = window.innerHeight;

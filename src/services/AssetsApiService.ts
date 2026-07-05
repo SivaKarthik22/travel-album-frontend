@@ -45,7 +45,7 @@ class AssetsApiService extends ApiService {
             } while (cursor);
         }
         catch (error: any) {
-            console.warn(error);
+            console.log(error);
         }
         return allResources;
     }

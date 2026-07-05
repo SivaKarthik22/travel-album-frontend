@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -19,6 +18,10 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import userApiServiceInstance from "@/services/UserApiService"
+import { setUser, setAccessToken } from "@/store/UserSlice"
+import { toast } from "sonner"
 
 const newFormSchema = z.object({
   email: z
@@ -47,6 +50,7 @@ const loginFormSchema = z.object({
 
 export default function LoginForm({ loginMode = true }: any) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const formSchema = loginMode ? loginFormSchema : newFormSchema;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,9 +59,49 @@ export default function LoginForm({ loginMode = true }: any) {
       password: "",
     },
   })
+  const { isSubmitting } = form.formState
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try {
+      if (loginMode) {
+        const responseData = await userApiServiceInstance.loginUser(data.email, data.password);
+        dispatch(setUser(responseData.user));
+        dispatch(setAccessToken(responseData.accessToken));
+        form.reset();
+        navigate("/");
+      }
+      else {
+        //todo
+      }
+    }
+    catch (error: any) {
+      if (error.response) {
+        // Server responded with a status code outside the 2xx range
+        toast.error(error.response.data.message || 'Invalid credentials', {
+          position: "top-center",
+          classNames: {
+            toast: "bg-destructive/10",
+          }
+        });
+      } else if (error.request) {
+        // Request was made but no response was received
+        toast.error('Network error. Please check your internet connection.', {
+          position: "top-center",
+          classNames: {
+            toast: "bg-destructive/10",
+          }
+        });
+      } else {
+        // Something went wrong setting up the request
+        toast.error('An unexpected error occurred', { 
+          position: "top-center",
+          classNames: {
+            toast: "bg-destructive/10",
+          }
+        });
+      }
+      // form.reset();
+    }
   }
 
   function redirect() {
@@ -142,8 +186,8 @@ export default function LoginForm({ loginMode = true }: any) {
               }
               <div>
                 <span>{loginMode ? "Are you a new user?" : "Already have an account?"}</span>
-                <Button variant="link" size="default" onClick={redirect}>
-                  {loginMode ? "Create account" : "Sign in"}
+                <Button variant="link" size="default" onClick={redirect} disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : (loginMode ? "Create account" : "Sign in")}
                 </Button>
               </div>
             </Field>
