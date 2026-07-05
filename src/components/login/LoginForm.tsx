@@ -100,7 +100,7 @@ export default function LoginForm({ loginMode = true }: any) {
           }
         });
       }
-      // form.reset();
+      form.reset();
     }
   }
 
