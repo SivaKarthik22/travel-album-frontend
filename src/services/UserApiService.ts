@@ -1,5 +1,5 @@
 import { ApiService } from "./ApiService";
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 
 class UserApiService extends ApiService {
     constructor() {
@@ -7,13 +7,18 @@ class UserApiService extends ApiService {
             baseURL: "/api/user/",
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            withCredentials: true,
         });
-        super(axiosInstance);
+        super(axiosInstance, true);
     }
 
     async loginUser(email: string, password: string) {
-        const response = await this.axiosInstance.post("/login", { email, password });
+        const response = await this.axiosInstance.post(
+            "/login",
+            { email, password },
+            { skipAuthRefresh: true } as AxiosRequestConfig
+        );
         return response.data;
     }
 }

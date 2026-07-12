@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux"
 import userApiServiceInstance from "@/services/UserApiService"
 import { setUser, setAccessToken } from "@/store/UserSlice"
 import { toast } from "sonner"
+import { Toaster } from "../ui/sonner"
 
 const newFormSchema = z.object({
   email: z
@@ -111,6 +112,7 @@ export default function LoginForm({ loginMode = true }: any) {
 
   return (
     <div className="w-1/2 h-screen flex flex-col items-center justify-center">
+      <Toaster />
       <Button variant="secondary" size="default" className="px-3 mt-5 mr-5 self-end" onClick={redirect}>
         {loginMode ? "Create account" : "Sign in"}
       </Button>

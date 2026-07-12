@@ -1,7 +1,7 @@
 import assetsApiServiceInstance from "@/services/AssetsApiService";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
-export default function ImageComponent() {
+const ImageComponent = memo(()=>{
     const [imagesList, setImagesList] = useState<string[]>([]);
 
     const getImagesList = async () => {
@@ -20,6 +20,8 @@ export default function ImageComponent() {
             <p>Album</p>
         </div>
     </div>
-}
+});
+
+export default ImageComponent;
 
 const getRandomNumber = (length: number) => Math.floor(Math.random() * length);

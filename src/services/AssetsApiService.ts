@@ -7,9 +7,10 @@ class AssetsApiService extends ApiService {
             baseURL: "/api/assets/",
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            withCredentials: true,
         });
-        super(axiosInstance);
+        super(axiosInstance, true);
     }
 
     async getLoginPageImagesList(height:number) {
